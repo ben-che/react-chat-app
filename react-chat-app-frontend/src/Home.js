@@ -6,14 +6,14 @@ class Home extends React.Component
     constructor(props)
     {
         super(props);
-        this.setNameHandler = this.setNameHandler.bind(this);
+        this.addUserHandler = this.addUserHandler.bind(this);
     }
 
-    componentDidMount()
+    componentWillMount()
     {
         if (localStorage.getItem("jwt"))
         {
-            axios.post("http://localhost:8080/hastoken", {
+            axios.post("http://localhost:8080/hasvalidtoken", {
                 jwt: localStorage.getItem("jwt")
             })
             .then((result) =>
@@ -27,14 +27,14 @@ class Home extends React.Component
         }
     }
 
-    setNameHandler(event)
+    addUserHandler(event)
     {
         event.preventDefault();
 
-        if (event.target.name.value && typeof event.target.name.value === "string" && event.target.name.value.trim() && event.target.name.value.length <= 15)
+        if (event.target.username.value && typeof event.target.username.value === "string" && event.target.username.value.trim() && event.target.username.value.length <= 15)
         {
-            axios.post("http://localhost:8080/setname", {
-                name: event.target.name.value
+            axios.post("http://localhost:8080/adduser", {
+                username: event.target.username.value
             })
             .then((result) =>
             {
@@ -47,7 +47,7 @@ class Home extends React.Component
             });
         }
 
-        event.target.name.value = "";
+        event.target.username.value = "";
     }
 
     render()
@@ -60,9 +60,9 @@ class Home extends React.Component
                 <div className="container">
                     <div className="row">
                         <div className="col-12">
-                            <form onSubmit={this.setNameHandler}>
+                            <form onSubmit={this.addUserHandler}>
                                 <div className="input-group">
-                                    <input className="form-control" name="name" type="text" placeholder="Specify a name to join. (1 - 15 characters)" />
+                                    <input className="form-control" name="username" type="text" placeholder="Specify a name to join. (1 - 15 characters)" />
                                     <div className="input-group-append">
                                         <button className="btn bg-dark text-light">Join</button>
                                     </div>

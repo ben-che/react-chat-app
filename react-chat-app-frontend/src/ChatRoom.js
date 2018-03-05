@@ -7,15 +7,16 @@ class ChatRoom extends React.Component
     {
         if (localStorage.getItem("jwt"))
         {
-            axios.post("http://localhost:8080/hastoken", {
+            axios.post("http://localhost:8080/hasvalidtoken", {
                 jwt: localStorage.getItem("jwt")
             })
             .then((result) =>
             {
-
+                console.log(result.data);
             })
             .catch((error) =>
             {
+                localStorage.removeItem("jwt");
                 this.props.history.push("/");
             });
         }
